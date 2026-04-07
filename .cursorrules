@@ -1,0 +1,125 @@
+# .cursorrules — AI Consulting Agent
+
+## РЕПОЗИТОРИЙ И ДЕПЛОЙ
+
+- GitHub repo: https://github.com/reporter40/ai-consulting-agent
+- Git root = backend/ → корень репо на GitHub
+- Backend: Render (Docker), auto-deploy push→main → https://ai-consulting-agent.onrender.com
+- Frontend: Vercel (Next.js), auto-deploy push→main → https://ai-consulting-agent.vercel.app
+  - Root Directory в Vercel = frontend
+- НЕ запускай vercel deploy вручную — только git push в main
+
+## СТРУКТУРА РЕПО
+
+backend/                ← git root
+  app/
+    api/               ← FastAPI роутеры: artifacts, diagnostic, health,
+                          hypotheses, iqd, knowledge_graph, projects,
+                          report, settings_llm, workflow
+    db/session.py      ← asyncpg async engine
+    orchestration/
+      stages.py        ← STAGE_ORDER, HUMAN_CHECKPOINTS
+      state.py         ← WorkflowState TypedDict
+    config.py          ← pydantic-settings (DATABASE_URL из env)
+    main.py            ← FastAPI app
+  Dockerfile
+frontend/              ← Next.js 14 App Router
+  src/
+    app/dashboard/[projectId]/  ← страница проекта
+    components/dashboard/       ← компоненты дашборда
+    hooks/                      ← React хуки
+    lib/api.ts                  ← API клиент (ApiError extends Error)
+
+## TECH STACK
+
+Backend:
+- FastAPI + Python 3.11
+- LangGraph (workflow state machine)
+- asyncpg + SQLAlchemy async (PostgreSQL)
+- Redis / Upstash (события workflow)
+- Neo4j Aura (knowledge graph)
+- OpenRouter: model=meta-llama/llama-3.3-70b-instruct:free
+  base_url=https://openrouter.ai/api/v1 (OpenAI-совместимый)
+- SSE стриминг для диагностики
+
+Frontend:
+- Next.js 14 App Router (TypeScript)
+- Tailwind CSS + shadcn/ui
+
+## WORKFLOW АРХИТЕКТУРА
+
+Стадии: intake→data_collection→analysis→hypothesis_synthesis→report_review→completed
+HITL checkpoints: method_selection, final_report
+
+WorkflowState: {project_id, current_stage, awaiting_human, human_checkpoint, last_event}
+
+API:
+  GET  /api/projects/{id}/workflow          → состояние
+  POST /api/projects/{id}/workflow/advance  → {target_stage: string}
+  POST /api/projects/{id}/workflow/confirm  → {checkpoint: string, approved: bool}
+  GET  /api/projects/{id}/workflow/events   → Redis история
+
+## ПОЛНЫЙ ФУНКЦИОНАЛ (приоритеты)
+
+[P1] WorkflowPanel + HITL
+- Текущая стадия, кнопки перехода (advance)
+- Approve/Reject для HITL checkpoints
+- Polling состояния каждые 5 сек
+- Отображение ошибок API (ApiError)
+
+[P2] Табы навигации проекта
+- Overview | Диагностика | Гипотезы | Отчёт | Артефакты | Граф | IQD
+
+[P3] Диагностика (SSE стриминг)
+- POST /api/projects/{id}/diagnostic/stream
+- SSE EventSource клиент, реал-тайм вывод сообщений
+
+[P4] Гипотезы CRUD
+- GET/POST /api/projects/{id}/hypotheses
+- PATCH/DELETE /api/projects/{id}/hypotheses/{hid}
+
+[P5] Генерация отчёта
+- POST /api/projects/{id}/report/generate
+- GET  /api/projects/{id}/report → Markdown рендер + PDF
+
+[P6] Артефакты
+- GET/POST /api/projects/{id}/artifacts (multipart)
+- drag-and-drop загрузка
+
+[P7] Граф знаний
+- GET /api/projects/{id}/knowledge-graph
+- react-force-graph или D3 визуализация
+
+[P8] IQD
+- GET/POST /api/projects/{id}/iqd/calculate
+- Таблица показателей + итоговый балл
+
+[P9] Настройки LLM
+- GET/POST /api/settings/llm (модель, температура, max_tokens)
+
+## ПРАВИЛА
+
+1. НИКОГДА не запускай vercel deploy — только git push в main
+2. Push всегда в main ветку
+3. Lint перед коммитом фронтенда: cd frontend && npm run lint
+4. DATABASE_URL: ?ssl=require (НЕ ?sslmode=require — asyncpg не поддерживает)
+5. Forward references: from __future__ import annotations
+6. Не трогай .env — секреты в Render/Vercel env vars
+7. Commit после каждой фичи: feat: / fix: / chore:
+8. API ошибки: используй ApiError class из frontend/src/lib/api.ts
+
+## ТЕКУЩИЙ СТАТУС
+
+- Backend LIVE: https://ai-consulting-agent.onrender.com
+- Frontend LIVE: https://ai-consulting-agent.vercel.app
+- WorkflowPanel: частично (HITL controls добавлены в этой сессии)
+- Диагностика, Гипотезы, Отчёт, Артефакты, Граф, IQD: НЕ реализованы
+
+## СЛЕДУЮЩИЕ ШАГИ
+
+1. Проверь frontend/src/components/dashboard/workflow-panel.tsx
+2. Добавь polling (setInterval 5000) и обработку HITL confirm
+3. Создай компонент табов для страницы проекта
+4. DiagnosticsPanel с SSE EventSource
+5. HypothesesPanel с CRUD формами
+6. Продолжай P5→P9
