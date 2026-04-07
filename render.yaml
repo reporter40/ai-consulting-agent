@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: ai-consulting-agent
+    runtime: docker
+    region: frankfurt
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: NEO4J_URI
+        sync: false
+      - key: NEO4J_USER
+        sync: false
+      - key: NEO4J_PASSWORD
+        sync: false
+      - key: ABACUS_API_KEY
+        sync: false
+      - key: ABACUS_BASE_URL
+        sync: false
+      - key: LLM_MODEL
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ANTHROPIC_BASE_URL
+        sync: false
+      - key: SETTINGS_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: PORT
+        value: "8000"
