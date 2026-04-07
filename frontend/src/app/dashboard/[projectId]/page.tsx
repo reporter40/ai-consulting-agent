@@ -209,6 +209,11 @@ export default function ProjectDetailPage() {
           onUpdated={() => refetch()}
         />
       )}
+      {view.source === "api" && data.errors.workflow && (
+        <p className="text-destructive text-sm">
+          Workflow не загрузился полностью: {data.errors.workflow}
+        </p>
+      )}
 
       <Tabs defaultValue="overview" className="w-full">
         <TabsList className="grid w-full max-w-3xl grid-cols-2 sm:grid-cols-4">
@@ -240,6 +245,11 @@ export default function ProjectDetailPage() {
                   </span>
                 )}
               </div>
+              {view.source === "api" && data.errors.iqd && (
+                <p className="text-destructive text-sm">
+                  IQD временно недоступен: {data.errors.iqd}
+                </p>
+              )}
               {iqdLow && (
                 <p className="text-amber-600 dark:text-amber-400 text-sm">
                   Ниже порога — рекомендуется расширить выборку или уточнить
@@ -265,6 +275,11 @@ export default function ProjectDetailPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
+              {view.source === "api" && data.errors.artifacts && (
+                <p className="text-destructive text-sm">
+                  Артефакты загружены частично: {data.errors.artifacts}
+                </p>
+              )}
               {view.artifacts.length === 0 && (
                 <p className="text-muted-foreground text-sm">Пока нет артефактов.</p>
               )}
@@ -293,6 +308,11 @@ export default function ProjectDetailPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
+              {view.source === "api" && data.errors.hypotheses && (
+                <p className="text-destructive mb-3 text-sm">
+                  Гипотезы загружены частично: {data.errors.hypotheses}
+                </p>
+              )}
               {view.source === "api" && projectId ? (
                 <HypothesisPanel
                   projectId={projectId}

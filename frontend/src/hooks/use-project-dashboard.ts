@@ -17,6 +17,12 @@ export interface ProjectDashboardBundle {
   hypotheses: HypothesisRead[];
   iqd: IqdResponse | null;
   artifacts: ArtifactRead[];
+  errors: {
+    workflow: string | null;
+    hypotheses: string | null;
+    iqd: string | null;
+    artifacts: string | null;
+  };
 }
 
 export interface UseProjectDashboardResult {
@@ -32,6 +38,12 @@ const emptyBundle: ProjectDashboardBundle = {
   hypotheses: [],
   iqd: null,
   artifacts: [],
+  errors: {
+    workflow: null,
+    hypotheses: null,
+    iqd: null,
+    artifacts: null,
+  },
 };
 
 export function useProjectDashboard(projectId: string | undefined): UseProjectDashboardResult {
@@ -51,18 +63,36 @@ export function useProjectDashboard(projectId: string | undefined): UseProjectDa
 
     Promise.all([
       fetchJson<ProjectRead>(base),
-      fetchJson<WorkflowStateResponse>(`${base}/workflow`).catch(() => null),
-      fetchJson<HypothesisRead[]>(`${base}/hypotheses`).catch(() => []),
-      fetchJson<IqdResponse>(`${base}/iqd`).catch(() => null),
-      fetchJson<ArtifactRead[]>(`${base}/artifacts`).catch(() => []),
+      fetchJson<WorkflowStateResponse>(`${base}/workflow`).then(
+        (value) => ({ value, error: null }),
+        (e: unknown) => ({ value: null, error: e instanceof Error ? e.message : "Ошибка workflow" }),
+      ),
+      fetchJson<HypothesisRead[]>(`${base}/hypotheses`).then(
+        (value) => ({ value, error: null }),
+        (e: unknown) => ({ value: [], error: e instanceof Error ? e.message : "Ошибка гипотез" }),
+      ),
+      fetchJson<IqdResponse>(`${base}/iqd`).then(
+        (value) => ({ value, error: null }),
+        (e: unknown) => ({ value: null, error: e instanceof Error ? e.message : "Ошибка IQD" }),
+      ),
+      fetchJson<ArtifactRead[]>(`${base}/artifacts`).then(
+        (value) => ({ value, error: null }),
+        (e: unknown) => ({ value: [], error: e instanceof Error ? e.message : "Ошибка артефактов" }),
+      ),
     ])
       .then(([project, workflow, hypotheses, iqd, artifacts]) => {
         setData({
           project,
-          workflow,
-          hypotheses,
-          iqd,
-          artifacts,
+          workflow: workflow.value,
+          hypotheses: hypotheses.value,
+          iqd: iqd.value,
+          artifacts: artifacts.value,
+          errors: {
+            workflow: workflow.error,
+            hypotheses: hypotheses.error,
+            iqd: iqd.error,
+            artifacts: artifacts.error,
+          },
         });
       })
       .catch((e: unknown) => {

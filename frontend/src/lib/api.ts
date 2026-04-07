@@ -3,12 +3,16 @@
  */
 
 export class ApiError extends Error {
+  public readonly code?: string;
+
   constructor(
     message: string,
     public readonly status: number,
+    code?: string,
   ) {
     super(message);
     this.name = "ApiError";
+    this.code = code;
   }
 }
 
@@ -29,8 +33,30 @@ export async function fetchJson<T>(path: string, init?: RequestInit): Promise<T>
     cache: "no-store",
   });
   if (!res.ok) {
+    let message = res.statusText || "Request failed";
+    let code: string | undefined;
     const text = await res.text();
-    throw new ApiError(text || res.statusText, res.status);
+    if (text) {
+      try {
+        const parsed = JSON.parse(text) as {
+          detail?: unknown;
+          error?: { code?: unknown; message?: unknown };
+        };
+        if (typeof parsed.error?.message === "string") {
+          message = parsed.error.message;
+        } else if (typeof parsed.detail === "string") {
+          message = parsed.detail;
+        } else {
+          message = text;
+        }
+        if (typeof parsed.error?.code === "string") {
+          code = parsed.error.code;
+        }
+      } catch {
+        message = text;
+      }
+    }
+    throw new ApiError(message, res.status, code);
   }
   return res.json() as Promise<T>;
 }

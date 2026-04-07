@@ -27,6 +27,7 @@ export function WorkflowPanel({ projectId, initial, onUpdated }: WorkflowPanelPr
   const [events, setEvents] = useState<unknown[]>([]);
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [selectedNext, setSelectedNext] = useState<string>("");
 
   const loadEvents = useCallback(async () => {
     try {
@@ -41,6 +42,7 @@ export function WorkflowPanel({ projectId, initial, onUpdated }: WorkflowPanelPr
 
   useEffect(() => {
     setWf(initial);
+    setSelectedNext(initial?.allowed_next?.[0] ?? "");
   }, [initial]);
 
   useEffect(() => {
@@ -61,7 +63,18 @@ export function WorkflowPanel({ projectId, initial, onUpdated }: WorkflowPanelPr
     }
   }, [projectId, onUpdated, loadEvents]);
 
-  const nextStage = wf?.allowed_next?.[0];
+  useEffect(() => {
+    const allowed = wf?.allowed_next ?? [];
+    if (allowed.length === 0) {
+      setSelectedNext("");
+      return;
+    }
+    if (!selectedNext || !allowed.includes(selectedNext)) {
+      setSelectedNext(allowed[0]);
+    }
+  }, [wf, selectedNext]);
+
+  const nextStage = selectedNext || wf?.allowed_next?.[0];
   const nextLabel = nextStage
     ? STAGE_LABELS[normalizeStage(nextStage)]
     : null;
@@ -88,7 +101,7 @@ export function WorkflowPanel({ projectId, initial, onUpdated }: WorkflowPanelPr
     }
   };
 
-  const doConfirm = async () => {
+  const doConfirm = async (approved: boolean) => {
     const cp = wf?.human_checkpoint;
     if (!cp) return;
     setBusy(true);
@@ -98,7 +111,7 @@ export function WorkflowPanel({ projectId, initial, onUpdated }: WorkflowPanelPr
         `/api/projects/${projectId}/workflow/confirm`,
         {
           method: "POST",
-          body: JSON.stringify({ checkpoint: cp, approved: true }),
+          body: JSON.stringify({ checkpoint: cp, approved }),
         },
       );
       setWf(w);
@@ -137,15 +150,40 @@ export function WorkflowPanel({ projectId, initial, onUpdated }: WorkflowPanelPr
             <button
               type="button"
               disabled={busy}
-              onClick={() => doConfirm()}
+              onClick={() => doConfirm(true)}
               className={cn(buttonVariants({ size: "sm" }))}
             >
               Подтвердить
+            </button>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => doConfirm(false)}
+              className={cn(buttonVariants({ variant: "destructive", size: "sm" }))}
+            >
+              Вернуть на доработку
             </button>
           </div>
         )}
         {nextStage && nextLabel && (
           <div className="flex flex-wrap items-center gap-2">
+            {(wf.allowed_next?.length ?? 0) > 1 && (
+              <label className="text-sm">
+                Следующий этап:{" "}
+                <select
+                  className="border-input bg-background rounded border px-2 py-1 text-sm"
+                  value={selectedNext}
+                  disabled={busy}
+                  onChange={(e) => setSelectedNext(e.target.value)}
+                >
+                  {(wf.allowed_next ?? []).map((stage) => (
+                    <option key={stage} value={stage}>
+                      {STAGE_LABELS[normalizeStage(stage)] ?? stage}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             <button
               type="button"
               disabled={busy}
