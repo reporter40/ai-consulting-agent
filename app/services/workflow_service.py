@@ -134,18 +134,20 @@ async def confirm_human(
 
     if checkpoint not in HUMAN_CHECKPOINTS:
         raise ValidationError("Unknown checkpoint")
-    if not approved:
-        raise ValidationError("Approval required to continue")
     result = await session.execute(select(Project).where(Project.id == project_id))
     project = result.scalar_one_or_none()
     if project is None:
         raise AppError("Project not found", code="not_found")
 
     raw = dict(project.hitl) if isinstance(project.hitl, dict) else {}
-    raw[checkpoint] = True
+    raw[checkpoint] = approved
     project.hitl = raw
 
-    payload = {"event": "human_confirmed", "checkpoint": checkpoint}
+    payload = {
+        "event": "human_confirmed" if approved else "human_rejected",
+        "checkpoint": checkpoint,
+        "approved": approved,
+    }
     await publish_workflow_event(str(project_id), payload)
     await push_workflow_event_list(str(project_id), payload)
 
