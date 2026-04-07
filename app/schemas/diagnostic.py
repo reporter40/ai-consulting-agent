@@ -1,4 +1,5 @@
 """Diagnostic streaming request."""
+from __future__ import annotations
 
 from typing import Literal
 
@@ -28,7 +29,7 @@ class DiagnosticStreamRequest(BaseModel):
     )
 
     @model_validator(mode="after")
-    def require_message_or_attachments(self) -> DiagnosticStreamRequest:
+    def require_message_or_attachments(self) -> "DiagnosticStreamRequest":
         has_msg = bool((self.message or "").strip())
         has_att = any((a.text or "").strip() for a in self.attachments)
         if not has_msg and not has_att:
