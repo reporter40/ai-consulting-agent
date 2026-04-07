@@ -1,0 +1,52 @@
+[project]
+name = "ai-consulting-backend"
+version = "0.1.0"
+description = "AI Consulting Agent — FastAPI backend"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "sqlalchemy[asyncio]>=2.0.36",
+  "asyncpg>=0.30.0",
+  "alembic>=1.14.0",
+  "pydantic>=2.10.0",
+  "pydantic-settings>=2.6.0",
+  "redis>=5.2.0",
+  "neo4j>=5.26.0",
+  "langgraph>=0.2.60",
+  "langchain-core>=0.3.0",
+  "langchain-anthropic>=0.3.0",
+  "anthropic>=0.40.0",
+  "openai>=1.59.0",
+  "httpx>=0.28.0",
+  "reportlab>=4.2.0",
+  "python-multipart>=0.0.18",
+  "pypdf>=5.0.0",
+  "python-docx>=1.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+  "pytest-asyncio>=0.25.0",
+  "httpx>=0.28.0",
+  "ruff>=0.8.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
