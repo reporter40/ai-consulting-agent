@@ -1,0 +1,191 @@
+[
+  {
+    "id": "burial_001",
+    "name": "Мемориал советским воинам",
+    "country": "Сербия",
+    "city": "Белград",
+    "coordinates": [44.7866, 20.4489],
+    "buried_count": 1245,
+    "identified_count": 980,
+    "veterans": [
+      { "fio": "Иванов Пётр Степанович", "rank": "сержант", "birth": 1920, "death": 1944 },
+      { "fio": "Козлов Алексей Иванович", "rank": "рядовой", "birth": 1923, "death": 1944 }
+    ],
+    "vr_tour_available": true
+  },
+  {
+    "id": "burial_002",
+    "name": "Мемориальное кладбище в Тиргартене",
+    "country": "Германия",
+    "city": "Берлин",
+    "coordinates": [52.5145, 13.3501],
+    "buried_count": 2500,
+    "identified_count": 1800,
+    "veterans": [
+      { "fio": "Сидоров Михаил Фёдорович", "rank": "лейтенант", "birth": 1918, "death": 1945 }
+    ],
+    "vr_tour_available": false
+  },
+  {
+    "id": "burial_003",
+    "name": "Курган Славы",
+    "country": "Беларусь",
+    "city": "Минск",
+    "coordinates": [53.9678, 27.7553],
+    "buried_count": 0,
+    "identified_count": 0,
+    "veterans": [],
+    "vr_tour_available": true
+  },
+  {
+    "id": "burial_004",
+    "name": "Мемориал на горе Геллерт",
+    "country": "Венгрия",
+    "city": "Будапешт",
+    "coordinates": [47.4851, 19.0463],
+    "buried_count": 800,
+    "identified_count": 450,
+    "veterans": [
+      { "fio": "Морозов Василий Николаевич", "rank": "капитан", "birth": 1915, "death": 1945 }
+    ],
+    "vr_tour_available": false
+  },
+  {
+    "id": "burial_005",
+    "name": "Воинский мемориал Славин",
+    "country": "Словакия",
+    "city": "Братислава",
+    "coordinates": [48.1531, 17.0998],
+    "buried_count": 6845,
+    "identified_count": 5200,
+    "veterans": [
+      { "fio": "Петров Николай Александрович", "rank": "ст. сержант", "birth": 1921, "death": 1945 }
+    ],
+    "vr_tour_available": true
+  },
+  {
+    "id": "burial_006",
+    "name": "Мемориальное кладбище Ольшанское",
+    "country": "Чехия",
+    "city": "Прага",
+    "coordinates": [50.0695, 14.4739],
+    "buried_count": 437,
+    "identified_count": 380,
+    "veterans": [
+      { "fio": "Кузнецов Андрей Павлович", "rank": "рядовой", "birth": 1924, "death": 1945 }
+    ],
+    "vr_tour_available": false
+  },
+  {
+    "id": "burial_007",
+    "name": "Мемориал советским воинам в Трептов-парке",
+    "country": "Германия",
+    "city": "Берлин",
+    "coordinates": [52.4865, 13.4694],
+    "buried_count": 5000,
+    "identified_count": 3200,
+    "veterans": [
+      { "fio": "Волков Григорий Тимофеевич", "rank": "мл. лейтенант", "birth": 1919, "death": 1945 },
+      { "fio": "Новиков Степан Яковлевич", "rank": "ефрейтор", "birth": 1922, "death": 1945 }
+    ],
+    "vr_tour_available": true
+  },
+  {
+    "id": "burial_008",
+    "name": "Мемориал советским воинам-освободителям",
+    "country": "Монголия",
+    "city": "Улан-Батор",
+    "coordinates": [47.9184, 106.9177],
+    "buried_count": 120,
+    "identified_count": 95,
+    "veterans": [],
+    "vr_tour_available": false
+  },
+  {
+    "id": "burial_009",
+    "name": "Советское воинское кладбище",
+    "country": "Польша",
+    "city": "Варшава",
+    "coordinates": [52.2297, 21.0122],
+    "buried_count": 21468,
+    "identified_count": 12000,
+    "veterans": [
+      { "fio": "Смирнов Дмитрий Егорович", "rank": "рядовой", "birth": 1925, "death": 1944 }
+    ],
+    "vr_tour_available": false
+  },
+  {
+    "id": "burial_010",
+    "name": "Мемориал советским воинам",
+    "country": "Австрия",
+    "city": "Вена",
+    "coordinates": [48.1972, 16.3780],
+    "buried_count": 17000,
+    "identified_count": 11000,
+    "veterans": [
+      { "fio": "Лебедев Иван Алексеевич", "rank": "майор", "birth": 1912, "death": 1945 }
+    ],
+    "vr_tour_available": true
+  },
+  {
+    "id": "burial_011",
+    "name": "Пискарёвское кладбище",
+    "country": "Россия",
+    "city": "Санкт-Петербург",
+    "coordinates": [59.9920, 30.4186],
+    "buried_count": 470000,
+    "identified_count": 18000,
+    "veterans": [
+      { "fio": "Фёдоров Александр Петрович", "rank": "рядовой", "birth": 1920, "death": 1942 }
+    ],
+    "vr_tour_available": true
+  },
+  {
+    "id": "burial_012",
+    "name": "Мамаев курган",
+    "country": "Россия",
+    "city": "Волгоград",
+    "coordinates": [48.7424, 44.5369],
+    "buried_count": 34505,
+    "identified_count": 25000,
+    "veterans": [
+      { "fio": "Зайцев Василий Григорьевич", "rank": "снайпер", "birth": 1915, "death": 1991 }
+    ],
+    "vr_tour_available": true
+  },
+  {
+    "id": "burial_013",
+    "name": "Кладбище советских воинов",
+    "country": "Куба",
+    "city": "Гавана",
+    "coordinates": [23.1136, -82.3666],
+    "buried_count": 68,
+    "identified_count": 65,
+    "veterans": [],
+    "vr_tour_available": false
+  },
+  {
+    "id": "burial_014",
+    "name": "Мемориальный комплекс",
+    "country": "Казахстан",
+    "city": "Алматы",
+    "coordinates": [43.2220, 76.8512],
+    "buried_count": 350,
+    "identified_count": 280,
+    "veterans": [
+      { "fio": "Бауыржанов Малик Габдуллинович", "rank": "полковник", "birth": 1915, "death": 1945 }
+    ],
+    "vr_tour_available": false
+  },
+  {
+    "id": "burial_015",
+    "name": "Мемориал советским воинам",
+    "country": "Китай",
+    "city": "Далянь",
+    "coordinates": [38.9140, 121.6147],
+    "buried_count": 2030,
+    "identified_count": 1400,
+    "veterans": [],
+    "vr_tour_available": false
+  }
+]

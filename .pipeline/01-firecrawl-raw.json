@@ -1,0 +1,16 @@
+{
+  "branding": {
+    "colors": ["#0a0a0a", "#ffffff", "#6366f1", "#22d3ee"],
+    "typography": {
+      "headingFont": "Inter",
+      "bodyFont": "Inter",
+      "scale": 1.25
+    }
+  },
+  "rawHtml": "<div class='hero'><h1>3D Interactive Landing</h1><p>Scroll-driven animations with GSAP and frame sequences. Built for high-performance immersive web experiences.</p></div><section class='features'><div class='feature'><h3>Scroll Animations</h3><p>Frame-by-frame sequences triggered by scroll position.</p></div><div class='feature'><h3>GSAP Integration</h3><p>Professional-grade animation timeline with ScrollTrigger.</p></div><div class='feature'><h3>Performance</h3><p>Optimized frame loading with canvas rendering.</p></div></section>",
+  "meta": {
+    "title": "3D Landing Page",
+    "description": "Immersive scroll-driven 3D experience",
+    "extractedAt": "2026-04-09T00:00:00Z"
+  }
+}

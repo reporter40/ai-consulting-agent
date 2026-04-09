@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="hsl(312, 60%, 8%)"/>
+  <circle cx="960" cy="540" r="308" fill="none" stroke="hsl(312, 80%, 50%)" stroke-width="2" opacity="0.6"/>
+  <circle cx="960" cy="540" r="356" fill="none" stroke="hsl(312, 70%, 40%)" stroke-width="1" opacity="0.3"/>
+  <text x="960" y="550" text-anchor="middle" fill="white" font-family="monospace" font-size="24" opacity="0.4">FRAME 26</text>
+</svg>
