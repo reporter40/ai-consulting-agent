@@ -9,12 +9,26 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      fontFamily: {
+        heading: ["var(--landing-font-heading)", "Georgia", "serif"],
       },
       colors: {
+        landing: {
+          bg: "var(--landing-bg)",
+          "bg-warm": "var(--landing-bg-warm)",
+          text: "var(--landing-text)",
+          "text-dark": "var(--landing-text-dark)",
+          muted: "var(--landing-muted)",
+          "muted-warm": "var(--landing-muted-warm)",
+          accent: "var(--landing-accent)",
+          "accent-light": "var(--landing-accent-light)",
+          "accent-hover": "var(--landing-accent-hover)",
+          gold: "var(--landing-gold)",
+          surface: "var(--landing-surface)",
+          "surface-warm": "var(--landing-surface-warm)",
+          border: "var(--landing-border)",
+          "border-warm": "var(--landing-border-warm)",
+        },
         background: "var(--background)",
         foreground: "var(--foreground)",
         card: {
@@ -65,6 +79,11 @@ const config: Config = {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },
